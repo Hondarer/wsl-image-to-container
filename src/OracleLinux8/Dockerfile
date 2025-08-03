@@ -16,9 +16,11 @@ ENV SHELL="/bin/bash"
 # ロケール設定
 ENV LANG=ja_JP.UTF-8
 
-# 作業用ユーザーのパスワードの設定
-# SSH には、パスワードが必要
+# 作業用ユーザーの SSH パスワードの設定
 RUN echo 'user:user_passwd' | chpasswd
+
+# SSH キー認証の有効化
+RUN sed -i 's/^#\s*PubkeyAuthentication\s\+yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 
 # ユーザーの切り替え
 USER user

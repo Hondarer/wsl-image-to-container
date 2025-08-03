@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# /home/user が空の場合に実行
+# /home/user が空の場合に初期ファイルを配置
 if [ -z "$(ls -A /home/user)" ]; then
     echo "Initializing home..."
 

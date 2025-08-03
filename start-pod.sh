@@ -3,6 +3,9 @@
 # rootless podman-compose では、正しく UID のマッピングができない (userns が利用できない) ため、
 # podman を直接起動する
 
+# 既存のコンテナを停止
+source ./stop-pod.sh
+
 # Check if the oracle_linux:8 image exists
 if ! podman images | grep -q "oracle_linux.*8"; then
     source ./build-pod.sh
@@ -10,9 +13,6 @@ if ! podman images | grep -q "oracle_linux.*8"; then
     #echo "Please ensure oracle_linux:8 is registered before running this script."
     #exit 1
 fi
-
-# 既存のコンテナを停止・削除
-source ./stop-pod.sh
 
 # ホスト側ディレクトリ準備
 mkdir -p ./storage/OracleLinux8/1/home_user
