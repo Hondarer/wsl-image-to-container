@@ -3,23 +3,20 @@
 # rootless podman-compose では、正しく UID のマッピングができない (userns が利用できない) ため、
 # podman を直接起動する
 
-# 既存のコンテナを停止・削除
-podman stop oracle_linux_8_1 1>/dev/null 2>/dev/null || true
-podman rm oracle_linux_8_1 1>/dev/null 2>/dev/null || true
-
-# ホスト側ディレクトリ準備
-mkdir -p ./storage/oracle_linux_8/1/home_user
-mkdir -p ./storage/oracle_linux_8/1/workspace
-
-# OracleLinux8.tar.gz ファイルの存在確認
-if [ ! -f ./src/oracle_linux_8/OracleLinux8.tar.gz ]; then
-    echo "Warning: 'OracleLinux8.tar.gz' does not exist. Exiting script."
-    exit 1
+# Check if the oracle_linux:8 image exists
+if ! podman images | grep -q "oracle_linux.*8"; then
+    source ./build-pod.sh
+    #echo "Error: oracle_linux:8 image not found."
+    #echo "Please ensure oracle_linux:8 is registered before running this script."
+    #exit 1
 fi
 
-# イメージをビルド
-echo "Building image..."
-podman build -t oracle_linux:8 ./src/oracle_linux_8/
+# 既存のコンテナを停止・削除
+source ./stop-pod.sh
+
+# ホスト側ディレクトリ準備
+mkdir -p ./storage/OracleLinux8/1/home_user
+mkdir -p ./storage/OracleLinux8/1/workspace
 
 # コンテナ起動 (UID 1000 → 1000 マッピング)
 echo "Starting container with keep-id userns..."
@@ -27,8 +24,8 @@ podman run -d \
     --name oracle_linux_8_1 \
     --userns=keep-id \
     -p 20001:22 \
-    -v ./storage/oracle_linux_8/1/home_user:/home/user:Z \
-    -v ./storage/oracle_linux_8/1/workspace:/workspace:Z \
+    -v ./storage/OracleLinux8/1/home_user:/home/user:Z \
+    -v ./storage/OracleLinux8/1/workspace:/workspace:Z \
     --restart unless-stopped \
     oracle_linux:8
 
