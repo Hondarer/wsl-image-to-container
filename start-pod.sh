@@ -11,9 +11,9 @@ podman rm oracle_linux_8_1 1>/dev/null 2>/dev/null || true
 mkdir -p ./storage/oracle_linux_8/1/home_user
 mkdir -p ./storage/oracle_linux_8/1/workspace
 
-# oracle-linux-8-wsl.tgz ファイルの存在確認
-if [ ! -f ./src/oracle_linux_8/oracle-linux-8-wsl.tgz ]; then
-    echo "Warning: 'oracle-linux-8-wsl.tgz' does not exist. Exiting script."
+# OracleLinux8.tar.gz ファイルの存在確認
+if [ ! -f ./src/oracle_linux_8/OracleLinux8.tar.gz ]; then
+    echo "Warning: 'OracleLinux8.tar.gz' does not exist. Exiting script."
     exit 1
 fi
 

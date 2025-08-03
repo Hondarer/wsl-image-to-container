@@ -1,8 +1,8 @@
 FROM scratch
 EXPOSE 22
 
-# Oracle Linux WSL の tgz ファイルを展開して root ファイルシステムとして追加
-ADD oracle-linux-8-wsl.tgz /
+# Oracle Linux WSL の tar.gz ファイルを展開して root ファイルシステムとして追加
+ADD OracleLinux8.tar.gz /
 
 # user のホーム初期化スクリプトを追加
 ADD entrypoint.sh /usr/local/bin
