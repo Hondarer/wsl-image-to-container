@@ -29,7 +29,7 @@ podman run -d \
     --restart unless-stopped \
     oracle_linux:8
 
-echo "Container started successfully!"
+echo "Container started successfully."
 
 # 確認
 echo -e "\n=== Container Info ==="
