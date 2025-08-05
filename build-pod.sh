@@ -32,7 +32,7 @@ podman build -t oracle_linux:8 \
     ./src/OracleLinux8/
 
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to build image."
+    echo "Error: Failed to build container."
     exit 1
 fi
 

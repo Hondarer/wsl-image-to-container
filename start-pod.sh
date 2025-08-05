@@ -46,6 +46,11 @@ podman run -d \
     --env GID=${GID} \
     oracle_linux:8
 
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to start container."
+    exit 1
+fi
+
 echo "Container started successfully."
 
 # 確認
