@@ -10,6 +10,9 @@ ARG ROOT_FILENAME_WITH_EXT=
 # アーカイブを展開して root ファイルシステムとして追加
 ADD /${ROOT_FILENAME_WITH_EXT} /
 
+# container-release の配置
+ADD /container-release /etc
+
 # user のホーム初期化スクリプトを追加
 ADD entrypoint.sh /usr/local/bin
 RUN chown root:root /usr/local/bin/entrypoint.sh

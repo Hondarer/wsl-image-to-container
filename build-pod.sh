@@ -19,6 +19,10 @@ fi
 
 echo "Building from: ${ROOT_FILENAME_WITH_EXT}"
 
+# container-release の作成
+echo "Build on $(LANG=C && date)" > ./src/container-release
+echo "  from $(cd src && ls -l ${ROOT_FILENAME_WITH_EXT})" >> ./src/container-release
+
 # ホストのユーザー情報を取得
 USER_NAME=$(whoami)
 #UID=$(id -u)

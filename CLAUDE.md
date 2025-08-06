@@ -32,13 +32,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### コンテナを起動して動作確認
 
 ```bash
-podman run -it --rm --user $(id -u):$(id -g) oracle_linux:8 /bin/bash
+podman run -it --rm --user $(whoami) {コンテナ名} /bin/bash
 ```
 
 ### (コンテナ内で) Oracle Linux のバージョン確認
 
 ```bash
 cat /etc/oracle-release
+```
+
+### (コンテナ内で) 生成されたコンテナのバージョン確認
+
+```bash
+cat /etc/container-release
 ```
 
 ### (コンテナ内で) dnf が正常に動作するか確認
@@ -86,6 +92,3 @@ dnf --version
 - ホストとコンテナの UID/GID マッピングに依存する設計
 
 ## TODO or IDEA
-
-+ リリース ID を埋め込む (/etc/container-release)
-+ イメージのファイル名検索は自動で行う
