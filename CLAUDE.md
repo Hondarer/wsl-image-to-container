@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 概要
+
+root ファイルシステム (WSL からエクスポートしたイメージを想定) をコンテナイメージにして実行します。
+
 ## 主要コマンド
 
 ### コンテナイメージのビルド
@@ -9,7 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 ./build-pod.sh
 ```
-- OracleLinux8.tar.gz ファイルが存在することを確認してからビルドを実行
+- src の下に root ファイルシステムのアーカイブファイルが存在することを確認してからビルドを実行
 - 既存のコンテナを停止し、旧イメージを削除してから新しいイメージをビルド
 
 ### コンテナの起動
@@ -57,17 +61,18 @@ dnf --version
 
 ### プロジェクト構造
 
-- `src/`: Oracle Linux 8 の Dockerfile とファイル群
-  - `Dockerfile`: scratch ベースで Oracle Linux WSL イメージを展開
-  - `OracleLinux8.tar.gz`: Oracle Linux WSL の root ファイルシステム
+- `src/`: Dockerfile とファイル群
+  - `Dockerfile`: scratch ベースでイメージを展開
+  - `{イメージ名}.tar.gz`: root ファイルシステム
   - `entrypoint.sh`: 初回起動時のホームディレクトリ初期化と SSH サーバ起動
+  - `container-release`: コンテナイメージ内に配置する /etc/container-release 情報 (build-pos.sh にて自動生成)
 - `storage/1/`: コンテナのマウントポイント用ディレクトリ
   - `home_{ユーザー名}/`: ユーザーホームディレクトリ
   - `workspace/`: 作業用ディレクトリ
 
 ### コンテナ設計
 
-- scratch ベースイメージから Oracle Linux WSL ファイルシステムを展開
+- scratch ベースイメージから root ファイルシステムを展開
 - rootless podman で UID/GID マッピングを保持 (--userns=keep-id)
 - SSH 接続を前提とした設計 (ポート 22 をホストの 40022 にマッピング)
 - 鍵認証で SSH 接続可能 (鍵がない場合、パスワード: {ユーザー名}_passwd でパスワード認証可能)
@@ -83,7 +88,7 @@ dnf --version
 
 ### 必要ファイル
 
-- `src/OracleLinux8.tar.gz` が必須
+- `src/{イメージ名}.tar.gz` が必須
 - このファイルが存在しない場合、ビルドスクリプトは警告を出して終了
 
 ### ボリュームマウント
