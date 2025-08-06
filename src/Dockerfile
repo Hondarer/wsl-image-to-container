@@ -5,9 +5,10 @@ EXPOSE 22
 ARG USER_NAME=user
 ARG UID=1000
 ARG GID=1000
+ARG ROOT_FILENAME_WITH_EXT=
 
-# Oracle Linux WSL の tar.gz ファイルを展開して root ファイルシステムとして追加
-ADD OracleLinux8.tar.gz /
+# アーカイブを展開して root ファイルシステムとして追加
+ADD /${ROOT_FILENAME_WITH_EXT} /
 
 # user のホーム初期化スクリプトを追加
 ADD entrypoint.sh /usr/local/bin

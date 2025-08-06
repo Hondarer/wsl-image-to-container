@@ -3,11 +3,21 @@
 # rootless podman-compose では、正しく UID のマッピングができない (userns が利用できない) ため、
 # podman を直接操作する
 
-# OracleLinux8.tar.gz ファイルの存在確認
-if [ ! -f ./src/OracleLinux8/OracleLinux8.tar.gz ]; then
-    echo "Warning: 'OracleLinux8.tar.gz' does not exist. Exiting script."
+# アーカイブを特定する
+ROOT_FILENAME_WITH_EXT=$(find ./src -type f \( -name "*.tar.gz" -o -name "*.tgz" \) \
+    | sed -E 's/\.\/src\/(.*\/)?([^/]+)\.(tar\.gz|tgz)$/\2.\3/' \
+    | sort -V | tail -n 1)
+
+# ファイル名部分を切り出し
+CONTAINER_NAME=$(echo "${ROOT_FILENAME_WITH_EXT}" | sed 's/\.\(tar\.gz\|tgz\)$//')
+CONTAINER_NAME=$(echo "${CONTAINER_NAME}" | sed -E 's/([a-z])([A-Z])/\1_\2/g' | sed -E 's/([a-z])([0-9])/\1_\2/g' | tr '[:upper:]' '[:lower:]')
+
+if [ -z "${ROOT_FILENAME_WITH_EXT}" ]; then
+    echo "Warning: No .tar.gz or .tgz files found in './src'. Exiting script."
     exit 1
 fi
+
+echo "Building from: ${ROOT_FILENAME_WITH_EXT}"
 
 # ホストのユーザー情報を取得
 USER_NAME=$(whoami)
@@ -20,16 +30,17 @@ echo "Building with user info: USER_NAME=${USER_NAME}, UID=${UID}, GID=${GID}"
 source ./stop-pod.sh
 
 # 旧イメージの削除
-podman rmi oracle_linux:8 1>/dev/null 2>/dev/null || true
+podman rmi ${CONTAINER_NAME} 1>/dev/null 2>/dev/null || true
 echo "Clean old container successfully."
 
 # イメージをビルド
 echo "Building image..."
-podman build -t oracle_linux:8 \
+podman build -t ${CONTAINER_NAME} \
     --build-arg USER_NAME="${USER_NAME}" \
     --build-arg UID="${UID}" \
     --build-arg GID="${GID}" \
-    ./src/OracleLinux8/
+    --build-arg ROOT_FILENAME_WITH_EXT="${ROOT_FILENAME_WITH_EXT}" \
+    ./src/
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build container."

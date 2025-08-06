@@ -3,8 +3,8 @@
 # Dockerfile で USER ${USER_NAME} されている
 USER_NAME=$(whoami)
 
-# USER_HOME が空の場合に初期ファイルを配置
-if [ -z "$(ls -A /home/${USER_NAME})" ]; then
+# USER_HOME が空 (~/.ssh は評価対象から除く) の場合に初期ファイルを配置
+if [ -z "$(find /home/${USER_NAME} -mindepth 1 -not -path "/home/${USER_NAME}/.ssh/*" -not -name ".ssh" -print -quit)" ]; then
     echo "Initializing home for ${USER_NAME}..."
 
     cd /tmp

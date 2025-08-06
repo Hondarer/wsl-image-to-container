@@ -1,2 +1,3 @@
-src/OracleLinux8/*.tar.gz
+src/*.tar.gz
+src/*.tgz
 storage

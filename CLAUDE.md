@@ -51,11 +51,11 @@ dnf --version
 
 ### プロジェクト構造
 
-- `src/OracleLinux8/`: Oracle Linux 8 の Dockerfile とファイル群
+- `src/`: Oracle Linux 8 の Dockerfile とファイル群
   - `Dockerfile`: scratch ベースで Oracle Linux WSL イメージを展開
   - `OracleLinux8.tar.gz`: Oracle Linux WSL の root ファイルシステム
   - `entrypoint.sh`: 初回起動時のホームディレクトリ初期化と SSH サーバ起動
-- `storage/OracleLinux8/1/`: コンテナのマウントポイント用ディレクトリ
+- `storage/1/`: コンテナのマウントポイント用ディレクトリ
   - `home_{ユーザー名}/`: ユーザーホームディレクトリ
   - `workspace/`: 作業用ディレクトリ
 
@@ -77,7 +77,7 @@ dnf --version
 
 ### 必要ファイル
 
-- `src/OracleLinux8/OracleLinux8.tar.gz` が必須
+- `src/OracleLinux8.tar.gz` が必須
 - このファイルが存在しない場合、ビルドスクリプトは警告を出して終了
 
 ### ボリュームマウント
@@ -87,4 +87,5 @@ dnf --version
 
 ## TODO or IDEA
 
++ リリース ID を埋め込む (/etc/container-release)
 + イメージのファイル名検索は自動で行う
