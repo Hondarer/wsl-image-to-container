@@ -157,7 +157,7 @@ systemctl --user status wsl-container.service
 # 有効なユーザーサービス一覧
 systemctl --user list-unit-files --state=enabled
 
-# ログ確認（リアルタイム）
+# ログ確認 (リアルタイム)
 journalctl --user -u wsl-container.service -f
 
 # 最近のログ確認
