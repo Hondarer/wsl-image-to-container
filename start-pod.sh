@@ -65,17 +65,15 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "Container started successfully."
-
 # 確認
 
-echo -e "\n=== Container Info ==="
+echo -e "=== Container Info ==="
 podman ps | grep ${CONTAINER_NAME}_1
 
-#echo -e "\n=== UID/GID Mapping Check ==="
+#echo -e "=== UID/GID Mapping Check ==="
 #podman exec ${CONTAINER_NAME}_1 id
 
-#echo -e "\n=== File Permissions Check ==="
+#echo -e "=== File Permissions Check ==="
 #podman exec ${CONTAINER_NAME}_1 ls -la /workspace
 
-sleep 1
+echo "Container started successfully."
