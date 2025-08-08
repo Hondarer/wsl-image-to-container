@@ -68,6 +68,9 @@ fi
 echo "Container started successfully."
 
 # 確認
+
+sleep 1
+
 echo -e "\n=== Container Info ==="
 podman ps | grep ${CONTAINER_NAME}_1
 
