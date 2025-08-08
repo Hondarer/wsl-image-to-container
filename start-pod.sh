@@ -69,8 +69,6 @@ echo "Container started successfully."
 
 # 確認
 
-sleep 1
-
 echo -e "\n=== Container Info ==="
 podman ps | grep ${CONTAINER_NAME}_1
 
@@ -79,3 +77,5 @@ podman ps | grep ${CONTAINER_NAME}_1
 
 #echo -e "\n=== File Permissions Check ==="
 #podman exec ${CONTAINER_NAME}_1 ls -la /workspace
+
+sleep 1
