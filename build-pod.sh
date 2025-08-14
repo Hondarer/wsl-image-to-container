@@ -51,4 +51,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# 登録されたイメージの表示
+podman images ${CONTAINER_NAME}
+
 echo "Container built successfully."
