@@ -1,3 +1,5 @@
-src/*.tar.gz
-src/*.tgz
-storage
+/src/container-release
+/src/*.tar.gz
+/src/*.tgz
+
+/storage
