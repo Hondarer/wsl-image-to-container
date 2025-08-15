@@ -44,6 +44,6 @@ if [ -f /home/${USER_NAME}/.ssh/authorized_keys ]; then
     sudo sed -i 's/^\s*PasswordAuthentication\s\+yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 fi
 
-# ssh を待ち受け (ここでブロックされる)
+# SSH を待ち受け (ここでブロックされる)
 echo "Starting sshd..."
 sudo /usr/sbin/sshd -D
